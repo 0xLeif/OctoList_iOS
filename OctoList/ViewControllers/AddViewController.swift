@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftUIKit
+import EKit
 
 class AddViewController: UIViewController {
     public var addItemHandler: (ListItemData) -> Void
@@ -34,11 +35,11 @@ class AddViewController: UIViewController {
                     [
                         HStack {
                             [
-                                Button("Cancel") {
+                                Button("Cancel", titleColor: view.tintColor) {
                                     Navigate.shared.back()
                                 },
                                 Spacer(),
-                                Button("Add") { [weak self] in
+                                Button("Add", titleColor: view.tintColor) { [weak self] in
                                     guard let self = self else {
                                         return
                                     }

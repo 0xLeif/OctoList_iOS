@@ -21,12 +21,10 @@ struct SUIKStyle: SQLiteModel {
     var borderWidth: Float = 0
     var cornerRadius: Float = 0
     // Color Values
-    var backgroundColor: OctoColor = .clear
+    var backgroundColor: OctoColor = .white
     var marginBackgroundColor: OctoColor = .clear
     var borderColor: OctoColor = .black
     var textColor: OctoColor = .black
-    // App Values
-    var appTintColor: OctoColor = .defaultTint
     
     func apply(styleTo view: Styleable) {
         view.apply(style: self)

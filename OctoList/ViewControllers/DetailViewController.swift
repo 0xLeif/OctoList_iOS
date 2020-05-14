@@ -32,7 +32,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         
         Navigate.shared.setRight(barButton: BarButton {
-            Button(E.pencil.rawValue) {
+            Button("Edit", titleColor: view.tintColor) {
                 Navigate.shared.go(EditViewController(item: self.item) { [weak self] edittedItem in
                     self?.item = edittedItem
                     DispatchQueue.main.async {
@@ -62,6 +62,12 @@ class DetailViewController: UIViewController {
         }
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        draw()
+    }
+    
     private func draw() {
         stackContainer.clear().embed {
             SafeAreaView {
@@ -77,7 +83,7 @@ class DetailViewController: UIViewController {
         }
         
         view.clear()
-            .background(color: .white)
+            .background(color: traitCollection.userInterfaceStyle == .dark ? .black : .white)
             .embed {
                 ScrollView {
                     self.stackContainer

@@ -35,11 +35,11 @@ class EditViewController: UIViewController {
                     [
                         HStack {
                             [
-                                Button("Cancel") {
+                                Button("Cancel", titleColor: view.tintColor) {
                                     Navigate.shared.dismiss()
                                 },
                                 Spacer(),
-                                Button("Save") { [weak self] in
+                                Button("Save", titleColor: view.tintColor) { [weak self] in
                                     guard let self = self else {
                                         return
                                     }

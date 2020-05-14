@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUIKit
 import EKit
+import FLite
 
 class SettingsViewController: UIViewController {
     
@@ -30,34 +31,6 @@ class SettingsViewController: UIViewController {
                             ]
                         }
                         .padding()
-                    },
-                    VStack {
-                        [
-                            Label.headline("App Tint Color"),
-                            Button({ [weak self] in
-                                guard let self = self else {
-                                    return
-                                }
-                                Navigate.shared.go(ColorPickerViewController(color: globalStyle.appTintColor, forView: nil) { [weak self] in
-                                    guard let self = self else {
-                                        return
-                                    }
-                                    globalStyle.appTintColor = $0
-                                    self.view.allSubviews.forEach { $0.tintColor = globalStyle.appTintColor.uicolor }
-                                }, style: .push)
-                                
-                            }) {
-                                HStack {
-                                    [
-                                        Label.headline("Color"),
-                                        Spacer(),
-                                        Label(E.right_arrow.rawValue)
-                                    ]
-                                }
-                                .padding()
-                                
-                            }
-                        ]
                     }
                 ]
             }

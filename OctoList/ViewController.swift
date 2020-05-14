@@ -20,7 +20,7 @@ class ViewController: UIViewController {
             
             print(currentTableData)
             self.table
-                .headerTitle { "\(self.currentTableData[$0].first?.section ?? "N/A")"}
+                .headerTitle { "\(self.currentTableData[$0].first?.section ?? "")" }
                 .footerView { _ in UIView() }
                 .update { _ in currentTableData }
                 .reloadData()
@@ -56,13 +56,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         Navigate.shared.configure(controller: navigationController)
+        .set(title: "OctoList")
             .setLeft(barButton: BarButton {
-                Button(E.gear.rawValue) {
+                Button("Settings", titleColor: view.tintColor) {
                     Navigate.shared.go(SettingsViewController(), style: .push)
                 }
             })
             .setRight(barButton: BarButton {
-                Button(E.plus_sign.rawValue) {
+                Button("Add", titleColor: view.tintColor) {
                     Navigate.shared.go(AddViewController(addItemHandler: { [weak self] (newItem) in
                         FLite.create(model: newItem).do { (newItem) in
                             DispatchQueue.main.async {

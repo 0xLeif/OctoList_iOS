@@ -8,7 +8,7 @@
 
 import UIKit
 import FLite
-
+import SwiftUIKit
 
 var globalStyle = SUIKStyle()
 
@@ -16,7 +16,6 @@ var globalStyle = SUIKStyle()
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         FLite.storage = .file(path: "\(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path ?? "")/default.sqlite")
         
         FLite.prepare(model: ListItemData.self).whenComplete {
@@ -32,7 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         FLite.fetchAll(model: SUIKStyle.self) { (styles) in
-            print("Found Style: \(styles.first)")
+            styles.first.map { print("Found Style: \($0)") }
+            
             globalStyle = styles.first ?? SUIKStyle()
         }
         
@@ -52,7 +52,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
 

@@ -15,6 +15,7 @@ class ColorPickerViewController: UIViewController {
     }
     
     weak var currentBackgroundColorView: UIView?
+    private var colorView = UIView()
     
     private var color: OctoColor
     private var saveHandler: (OctoColor) -> Void
@@ -34,13 +35,13 @@ class ColorPickerViewController: UIViewController {
         super.viewDidLoad()
         
         Navigate.shared.setRight(barButton: UIBarButtonItem {
-            Button("Done") { [weak self] in
+            Button("Done", titleColor: view.tintColor) { [weak self] in
                 guard let self = self else {
                     return
                 }
                 
                 self.saveHandler(self.color)
-
+                
                 self.currentBackgroundColorView?.background(color: self.color.uicolor)
                 
                 Navigate.shared.back()
@@ -49,74 +50,89 @@ class ColorPickerViewController: UIViewController {
         
         updateViews()
         
-        view.embed {
-            SafeAreaView {
-                VStack {
-                    [
-                        UIView(backgroundColor: .white) {
-                            VStack {
-                                [
-                                    Label("Red"),
-                                    Slider(value: Float(self.color.red), from: 0, to: 1) { [weak self] (red) in
-                                        guard let self = self else {
-                                            return
-                                        }
-                                        
-                                        self.color = OctoColor(red: CGFloat(red),
-                                                                              green: self.color.green,
-                                                                              blue: self.color.blue,
-                                                                              alpha: self.color.alpha)
-                                        self.updateViews()
-                                    },
-                                    Label("Green"),
-                                    Slider(value: Float(self.color.green), from: 0, to: 1) { [weak self] (green) in
-                                        guard let self = self else {
-                                            return
-                                        }
-                                        
-                                        self.color = OctoColor(red: self.color.red,
-                                                                              green: CGFloat(green),
-                                                                              blue: self.color.blue,
-                                                                              alpha: self.color.alpha)
-                                        self.updateViews()
-                                    },
-                                    Label("Blue"),
-                                    Slider(value: Float(self.color.blue), from: 0, to: 1) { [weak self] (blue) in
-                                        guard let self = self else {
-                                            return
-                                        }
-                                        
-                                        self.color = OctoColor(red: self.color.red,
-                                                                              green: self.color.green,
-                                                                              blue: CGFloat(blue),
-                                                                              alpha: self.color.alpha)
-                                        self.updateViews()
-                                    },
-                                    Label("Alpha"),
-                                    Slider(value: Float(self.color.alpha), from: 0, to: 1) { [weak self] (alpha) in
-                                        guard let self = self else {
-                                            return
-                                        }
-                                        
-                                        self.color = OctoColor(red: self.color.red,
-                                                                              green: self.color.green,
-                                                                              blue: self.color.blue,
-                                                                              alpha: CGFloat(alpha))
-                                        self.updateViews()
+        draw()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        draw()
+    }
+    
+    private func draw() {
+        view
+            .clear()
+            .embed { Image("Transparency").contentMode(.scaleToFill) }
+            .embed {
+                colorView.embed {
+                    SafeAreaView {
+                        VStack {
+                            [
+                                UIView(backgroundColor: traitCollection.userInterfaceStyle == .dark ? .black : .white) {
+                                    VStack {
+                                        [
+                                            Label("Red"),
+                                            Slider(value: Float(self.color.red), from: 0, to: 1) { [weak self] (red) in
+                                                guard let self = self else {
+                                                    return
+                                                }
+                                                
+                                                self.color = OctoColor(red: CGFloat(red),
+                                                                       green: self.color.green,
+                                                                       blue: self.color.blue,
+                                                                       alpha: self.color.alpha)
+                                                self.updateViews()
+                                            },
+                                            Label("Green"),
+                                            Slider(value: Float(self.color.green), from: 0, to: 1) { [weak self] (green) in
+                                                guard let self = self else {
+                                                    return
+                                                }
+                                                
+                                                self.color = OctoColor(red: self.color.red,
+                                                                       green: CGFloat(green),
+                                                                       blue: self.color.blue,
+                                                                       alpha: self.color.alpha)
+                                                self.updateViews()
+                                            },
+                                            Label("Blue"),
+                                            Slider(value: Float(self.color.blue), from: 0, to: 1) { [weak self] (blue) in
+                                                guard let self = self else {
+                                                    return
+                                                }
+                                                
+                                                self.color = OctoColor(red: self.color.red,
+                                                                       green: self.color.green,
+                                                                       blue: CGFloat(blue),
+                                                                       alpha: self.color.alpha)
+                                                self.updateViews()
+                                            },
+                                            Label("Alpha"),
+                                            Slider(value: Float(self.color.alpha), from: 0, to: 1) { [weak self] (alpha) in
+                                                guard let self = self else {
+                                                    return
+                                                }
+                                                
+                                                self.color = OctoColor(red: self.color.red,
+                                                                       green: self.color.green,
+                                                                       blue: self.color.blue,
+                                                                       alpha: CGFloat(alpha))
+                                                self.updateViews()
+                                            }
+                                        ]
                                     }
-                                ]
-                            }
+                                }
+                                .padding()
+                                .layer(cornerRadius: 8),
+                                Spacer().background(color: .clear)
+                            ]
                         }
-                        .padding()
-                        .layer(cornerRadius: 8),
-                        Spacer().background(color: .clear)
-                    ]
+                    }
                 }
-            }
         }
     }
     
     private func updateViews() {
-        view.background(color: color.uicolor)
+        colorView.background(color: color.uicolor)
     }
 }

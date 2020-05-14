@@ -13,8 +13,11 @@ import FLite
 class CellCustomizeViewController: UIViewController {
     private var style = globalStyle
     private let currentBackgroundColorView = UIView()
+    private let currentMarginBackgroundColorView = UIView()
+    private let currentBorderColorView = UIView()
+    private let currentTextColorView = UIView()
     private lazy var styledView = StyleView(style: self.style) {
-        VStack(withSpacing: 4) {
+        VStack {
             [
                 Label.title1("SOME TITLE"),
                 Label.body("THIS IS THE FIRST NOTE")
@@ -31,7 +34,7 @@ class CellCustomizeViewController: UIViewController {
         super.viewDidLoad()
         
         Navigate.shared.setRight(barButton: UIBarButtonItem {
-            Button("Save") { [weak self] in
+            Button("Save", titleColor: view.tintColor) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -62,11 +65,17 @@ class CellCustomizeViewController: UIViewController {
         draw()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        draw()
+    }
+    
     private func draw() {
         
         view.clear()
             .embed {
-                UIView(backgroundColor: .white) {
+                UIView(backgroundColor: traitCollection.userInterfaceStyle == .dark ? .black : .white) {
                     SafeAreaView {
                         VStack(withSpacing: 32) {
                             [
@@ -141,7 +150,7 @@ class CellCustomizeViewController: UIViewController {
                                                     guard let self = self else {
                                                         return
                                                     }
-                                                    Navigate.shared.go(ColorPickerViewController(color: globalStyle.backgroundColor, forView: self.currentBackgroundColorView) { [weak self] in
+                                                    Navigate.shared.go(ColorPickerViewController(color: self.style.backgroundColor, forView: self.currentBackgroundColorView) { [weak self] in
                                                         guard let self = self else {
                                                             return
                                                         }
@@ -157,7 +166,7 @@ class CellCustomizeViewController: UIViewController {
                                                             self.currentBackgroundColorView
                                                                 .frame(width: 44)
                                                                 .layer(borderWidth: 1)
-                                                                .layer(borderColor: .black)
+                                                                .layer(borderColor: self.traitCollection.userInterfaceStyle == .dark ? .white : .black)
                                                                 .layer(cornerRadius: 8)
                                                                 .background(color: self.style.backgroundColor.uicolor)
                                                         ]
@@ -167,7 +176,109 @@ class CellCustomizeViewController: UIViewController {
                                                     
                                                 }
                                             ]
-                                        }
+                                        },
+                                        VStack {
+                                            [
+                                                Label.headline("Margin Background Color"),
+                                                Button({ [weak self] in
+                                                    guard let self = self else {
+                                                        return
+                                                    }
+                                                    Navigate.shared.go(ColorPickerViewController(color: self.style.marginBackgroundColor, forView: self.currentMarginBackgroundColorView) { [weak self] in
+                                                        guard let self = self else {
+                                                            return
+                                                        }
+                                                        self.style.marginBackgroundColor = $0
+                                                        self.styledView.apply(style: self.style)
+                                                    }, style: .push)
+                                                    
+                                                }) {
+                                                    HStack {
+                                                        [
+                                                            Label("Set Color"),
+                                                            Spacer(),
+                                                            self.currentMarginBackgroundColorView
+                                                                .frame(width: 44)
+                                                                .layer(borderWidth: 1)
+                                                                .layer(borderColor: self.traitCollection.userInterfaceStyle == .dark ? .white : .black)
+                                                                .layer(cornerRadius: 8)
+                                                                .background(color: self.style.marginBackgroundColor.uicolor)
+                                                        ]
+                                                    }
+                                                    .frame(height: 44)
+                                                    .padding(4)
+                                                    
+                                                }
+                                            ]
+                                        },
+                                        VStack {
+                                            [
+                                                Label.headline("Border Color"),
+                                                Button({ [weak self] in
+                                                    guard let self = self else {
+                                                        return
+                                                    }
+                                                    Navigate.shared.go(ColorPickerViewController(color: self.style.borderColor, forView: self.currentBorderColorView) { [weak self] in
+                                                        guard let self = self else {
+                                                            return
+                                                        }
+                                                        self.style.borderColor = $0
+                                                        self.styledView.apply(style: self.style)
+                                                    }, style: .push)
+                                                    
+                                                }) {
+                                                    HStack {
+                                                        [
+                                                            Label("Set Color"),
+                                                            Spacer(),
+                                                            self.currentBorderColorView
+                                                                .frame(width: 44)
+                                                                .layer(borderWidth: 1)
+                                                                .layer(borderColor: self.traitCollection.userInterfaceStyle == .dark ? .white : .black)
+                                                                .layer(cornerRadius: 8)
+                                                                .background(color: self.style.borderColor.uicolor)
+                                                        ]
+                                                    }
+                                                    .frame(height: 44)
+                                                    .padding(4)
+                                                    
+                                                }
+                                            ]
+                                        },
+                                        VStack {
+                                            [
+                                                Label.headline("Text Color"),
+                                                Button({ [weak self] in
+                                                    guard let self = self else {
+                                                        return
+                                                    }
+                                                    Navigate.shared.go(ColorPickerViewController(color: self.style.textColor, forView: self.currentTextColorView) { [weak self] in
+                                                        guard let self = self else {
+                                                            return
+                                                        }
+                                                        self.style.textColor = $0
+                                                        self.styledView.apply(style: self.style)
+                                                    }, style: .push)
+                                                    
+                                                }) {
+                                                    HStack {
+                                                        [
+                                                            Label("Set Color"),
+                                                            Spacer(),
+                                                            self.currentTextColorView
+                                                                .frame(width: 44)
+                                                                .layer(borderWidth: 1)
+                                                                .layer(borderColor: self.traitCollection.userInterfaceStyle == .dark ? .white : .black)
+                                                                .layer(cornerRadius: 8)
+                                                                .background(color: self.style.textColor.uicolor)
+                                                        ]
+                                                    }
+                                                    .frame(height: 44)
+                                                    .padding(4)
+                                                    
+                                                }
+                                            ]
+                                        },
                                     ]
                                 }.configure { $0.separatorStyle = .none }
                             ]

@@ -51,7 +51,7 @@ extension OctoColor: RawRepresentable {
     typealias RawValue = UIColor
     
     var uicolor: UIColor {
-        UIColor(red: red,
+        return UIColor(red: red,
                 green: green,
                 blue: blue,
                 alpha: alpha)

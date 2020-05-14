@@ -40,7 +40,7 @@ extension ListItemCell: TableViewCell {
         title.text = data.title
         notes.text = data.notes
         
-        UIView.animate(withDuration: 0.314,
+        UIView.animate(withDuration: contentView.subviews.count == 0 ? 0 : 0.314,
                        delay: 0,
                        options: [.curveEaseInOut],
                        animations: { self.styleView.apply(style: globalStyle) },
