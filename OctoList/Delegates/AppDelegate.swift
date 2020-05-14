@@ -9,10 +9,11 @@
 import UIKit
 import FLite
 
+
+var globalStyle = SUIKStyle()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -20,6 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FLite.prepare(model: ListItemData.self).whenComplete {
             print("FLite Prepared: ListItemData")
+        }
+        
+        FLite.prepare(model: SUIKStyle.self).whenComplete {
+            print("FLite Prepared: SUIKStyle")
+        }
+        
+        FLite.create(model: globalStyle).catch { print($0) }.whenComplete {
+            print("Added :\(globalStyle)")
+        }
+        
+        FLite.fetchAll(model: SUIKStyle.self) { (styles) in
+            print("Found Style: \(styles.first)")
+            globalStyle = styles.first ?? SUIKStyle()
         }
         
         return true

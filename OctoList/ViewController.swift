@@ -11,7 +11,6 @@ import SwiftUIKit
 import FLite
 import EKit
 
-var globalStyle = SUIKStyle()
 class ViewController: UIViewController {
     // MARK: Data
     private(set) var currentTableData: [[ListItemData]] = []
@@ -56,15 +55,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        globalStyle.marginBackgroundColor = .white
-        globalStyle.textColor = .black
-        globalStyle.borderColor = .black
-        globalStyle.backgroundColor = .white
-        
         Navigate.shared.configure(controller: navigationController)
             .setLeft(barButton: BarButton {
                 Button(E.gear.rawValue) {
-                    Navigate.shared.go(CellCustomizeViewController(), style: .push)
+                    Navigate.shared.go(SettingsViewController(), style: .push)
                 }
             })
             .setRight(barButton: BarButton {
@@ -83,6 +77,26 @@ class ViewController: UIViewController {
         table.delegate = self
         
         table.register(cells: [ListItemCell.self])
+            .canEditRowAtIndexPath { _ in true }
+            .editingStyleForRowAtIndexPath { _ in .delete }
+            .commitEditingStyleForRowAtIndexPath { [weak self] (style, path) in
+                guard let self = self else {
+                    return
+                }
+                
+                
+                let element = self.currentTableData[path.section][path.row]
+                
+                FLite.connection.then { (connection) in
+                    element.delete(on: connection)
+                }.catch {
+                    print("\($0)")
+                }.whenComplete {
+                    Navigate.shared.destroyToast()
+                }
+                
+                self.data.removeAll(where: { $0.id == element.id })
+        }
         
         view.embed {
             table

@@ -18,6 +18,8 @@
 		292F61EE2454B73B00CABDDC /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 292F61ED2454B73B00CABDDC /* SwiftUIKit */; };
 		296B714A245A5856008F26FA /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B7149245A5856008F26FA /* AddViewController.swift */; };
 		296B714C245A74A6008F26FA /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296B714B245A74A6008F26FA /* DetailViewController.swift */; };
+		2976DE55246CAFC8002B2F25 /* OctoColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976DE54246CAFC8002B2F25 /* OctoColor.swift */; };
+		2976DE57246CBE20002B2F25 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976DE56246CBE20002B2F25 /* SettingsViewController.swift */; };
 		297CF9BF24674BDA000B12A3 /* StyleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CF9BE24674BDA000B12A3 /* StyleView.swift */; };
 		297CF9C124675397000B12A3 /* CellCustomizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CF9C024675397000B12A3 /* CellCustomizeViewController.swift */; };
 		297CF9C3246761E4000B12A3 /* SUIKStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CF9C2246761E4000B12A3 /* SUIKStyle.swift */; };
@@ -40,6 +42,8 @@
 		292F61E62454B6DF00CABDDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		296B7149245A5856008F26FA /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		296B714B245A74A6008F26FA /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		2976DE54246CAFC8002B2F25 /* OctoColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctoColor.swift; sourceTree = "<group>"; };
+		2976DE56246CBE20002B2F25 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		297CF9BE24674BDA000B12A3 /* StyleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleView.swift; sourceTree = "<group>"; };
 		297CF9C024675397000B12A3 /* CellCustomizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellCustomizeViewController.swift; sourceTree = "<group>"; };
 		297CF9C2246761E4000B12A3 /* SUIKStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUIKStyle.swift; sourceTree = "<group>"; };
@@ -66,6 +70,7 @@
 			children = (
 				291E9F90245CD023001DE464 /* ListItemData.swift */,
 				297CF9C2246761E4000B12A3 /* SUIKStyle.swift */,
+				2976DE54246CAFC8002B2F25 /* OctoColor.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -78,6 +83,7 @@
 				29FE73CC2467128E00BBDA18 /* EditViewController.swift */,
 				297CF9C024675397000B12A3 /* CellCustomizeViewController.swift */,
 				29B62D5B246B5222000AD017 /* ColorPickerViewController.swift */,
+				2976DE56246CBE20002B2F25 /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -226,9 +232,11 @@
 				29B62D5C246B5222000AD017 /* ColorPickerViewController.swift in Sources */,
 				29FE73CD2467128E00BBDA18 /* EditViewController.swift in Sources */,
 				292F61DD2454B6DC00CABDDC /* ViewController.swift in Sources */,
+				2976DE55246CAFC8002B2F25 /* OctoColor.swift in Sources */,
 				291E9F94245CD05F001DE464 /* ListItemCell.swift in Sources */,
 				292F61D92454B6DC00CABDDC /* AppDelegate.swift in Sources */,
 				291E9F91245CD023001DE464 /* ListItemData.swift in Sources */,
+				2976DE57246CBE20002B2F25 /* SettingsViewController.swift in Sources */,
 				296B714C245A74A6008F26FA /* DetailViewController.swift in Sources */,
 				296B714A245A5856008F26FA /* AddViewController.swift in Sources */,
 				292F61DB2454B6DC00CABDDC /* SceneDelegate.swift in Sources */,

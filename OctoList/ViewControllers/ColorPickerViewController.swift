@@ -10,15 +10,42 @@ import UIKit
 import SwiftUIKit
 
 class ColorPickerViewController: UIViewController {
-    weak var styledView: StyleView?
-    weak var currentBackgroundColorView: UIView?
-    
     deinit {
         print("DEINIT ColorPickerViewController")
     }
     
+    weak var currentBackgroundColorView: UIView?
+    
+    private var color: OctoColor
+    private var saveHandler: (OctoColor) -> Void
+    
+    init(color: OctoColor, forView view: UIView?, _ saveHandler: @escaping (OctoColor) -> Void) {
+        self.color = color
+        self.currentBackgroundColorView = view
+        self.saveHandler = saveHandler
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Navigate.shared.setRight(barButton: UIBarButtonItem {
+            Button("Done") { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.saveHandler(self.color)
+
+                self.currentBackgroundColorView?.background(color: self.color.uicolor)
+                
+                Navigate.shared.back()
+            }
+        })
         
         updateViews()
         
@@ -30,36 +57,52 @@ class ColorPickerViewController: UIViewController {
                             VStack {
                                 [
                                     Label("Red"),
-                                    Slider(value: Float(globalStyle.backgroundColor.red), from: 0, to: 1) { [weak self] (red) in
-                                        globalStyle.backgroundColor = UIColor(red: CGFloat(red),
-                                                                              green: globalStyle.backgroundColor.green,
-                                                                              blue: globalStyle.backgroundColor.blue,
-                                                                              alpha: globalStyle.backgroundColor.alpha)
-                                        self?.updateViews()
+                                    Slider(value: Float(self.color.red), from: 0, to: 1) { [weak self] (red) in
+                                        guard let self = self else {
+                                            return
+                                        }
+                                        
+                                        self.color = OctoColor(red: CGFloat(red),
+                                                                              green: self.color.green,
+                                                                              blue: self.color.blue,
+                                                                              alpha: self.color.alpha)
+                                        self.updateViews()
                                     },
                                     Label("Green"),
-                                    Slider(value: Float(globalStyle.backgroundColor.green), from: 0, to: 1) { [weak self] (green) in
-                                        globalStyle.backgroundColor = UIColor(red: globalStyle.backgroundColor.red,
+                                    Slider(value: Float(self.color.green), from: 0, to: 1) { [weak self] (green) in
+                                        guard let self = self else {
+                                            return
+                                        }
+                                        
+                                        self.color = OctoColor(red: self.color.red,
                                                                               green: CGFloat(green),
-                                                                              blue: globalStyle.backgroundColor.blue,
-                                                                              alpha: globalStyle.backgroundColor.alpha)
-                                        self?.updateViews()
+                                                                              blue: self.color.blue,
+                                                                              alpha: self.color.alpha)
+                                        self.updateViews()
                                     },
                                     Label("Blue"),
-                                    Slider(value: Float(globalStyle.backgroundColor.blue), from: 0, to: 1) { [weak self] (blue) in
-                                        globalStyle.backgroundColor = UIColor(red: globalStyle.backgroundColor.red,
-                                                                              green: globalStyle.backgroundColor.green,
+                                    Slider(value: Float(self.color.blue), from: 0, to: 1) { [weak self] (blue) in
+                                        guard let self = self else {
+                                            return
+                                        }
+                                        
+                                        self.color = OctoColor(red: self.color.red,
+                                                                              green: self.color.green,
                                                                               blue: CGFloat(blue),
-                                                                              alpha: globalStyle.backgroundColor.alpha)
-                                        self?.updateViews()
+                                                                              alpha: self.color.alpha)
+                                        self.updateViews()
                                     },
                                     Label("Alpha"),
-                                    Slider(value: Float(globalStyle.backgroundColor.alpha), from: 0, to: 1) { [weak self] (alpha) in
-                                        globalStyle.backgroundColor = UIColor(red: globalStyle.backgroundColor.red,
-                                                                              green: globalStyle.backgroundColor.green,
-                                                                              blue: globalStyle.backgroundColor.blue,
+                                    Slider(value: Float(self.color.alpha), from: 0, to: 1) { [weak self] (alpha) in
+                                        guard let self = self else {
+                                            return
+                                        }
+                                        
+                                        self.color = OctoColor(red: self.color.red,
+                                                                              green: self.color.green,
+                                                                              blue: self.color.blue,
                                                                               alpha: CGFloat(alpha))
-                                        self?.updateViews()
+                                        self.updateViews()
                                     }
                                 ]
                             }
@@ -74,9 +117,6 @@ class ColorPickerViewController: UIViewController {
     }
     
     private func updateViews() {
-        view.background(color: globalStyle.backgroundColor)
-        
-        styledView?.apply(style: globalStyle)
-        currentBackgroundColorView?.background(color: globalStyle.backgroundColor)
+        view.background(color: color.uicolor)
     }
 }

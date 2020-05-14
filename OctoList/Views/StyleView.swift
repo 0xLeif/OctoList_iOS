@@ -19,12 +19,12 @@ class StyleView: UIView {
         
         embed(withPadding: style.margin) {
             view
-                .background(color: style.backgroundColor)
-                .layer(borderColor: style.borderColor)
+                .background(color: style.backgroundColor.uicolor)
+                .layer(borderColor: style.borderColor.uicolor)
                 .layer(borderWidth: style.borderWidth)
                 .layer(cornerRadius: style.cornerRadius)
         }
-        .background(color: style.marginBackgroundColor)
+        .background(color: style.marginBackgroundColor.uicolor)
         .apply(style: style)
     }
     
@@ -37,13 +37,13 @@ extension StyleView: Styleable {
     func apply(style: SUIKStyle) {
         // Update StyleView
         update(padding: style.margin)
-            .background(color: style.marginBackgroundColor)
+            .background(color: style.marginBackgroundColor.uicolor)
         
         // Update Padding with View
         view
             .update(padding: style.padding)
-            .background(color: style.backgroundColor)
-            .layer(borderColor: style.borderColor)
+            .background(color: style.backgroundColor.uicolor)
+            .layer(borderColor: style.borderColor.uicolor)
             .layer(borderWidth: style.borderWidth)
             .layer(cornerRadius: style.cornerRadius)
         
