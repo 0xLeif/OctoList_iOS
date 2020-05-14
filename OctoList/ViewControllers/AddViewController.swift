@@ -51,6 +51,8 @@ class AddViewController: UIViewController {
                                         return
                                     }
                                     
+                                    print("Adding: \(self.listItem.title)")
+                                    
                                     self.addItemHandler(self.listItem)
                                     Navigate.shared.back()
                                 }
@@ -62,7 +64,7 @@ class AddViewController: UIViewController {
                                 Label("Title"),
                                 Field(value: "", placeholder: "Title", keyboardType: .default)
                                     .configure { $0.borderStyle = .roundedRect }
-                                    .inputHandler { self.listItem.title = $0 }
+                                    .inputHandler { [weak self] in self?.listItem.title = $0 }
                             ]
                         },
                         
@@ -70,7 +72,7 @@ class AddViewController: UIViewController {
                             [
                                 Label("Notes"),
                                 MultiLineField(value: "", keyboardType: .default)
-                                    .inputHandler {  self.listItem.notes = $0 }
+                                    .inputHandler {  [weak self] in self?.listItem.notes = $0 }
                                     .layer(cornerRadius: 4)
                                     .layer(borderColor: .systemGray4)
                                     .layer(borderWidth: 1)
@@ -83,7 +85,7 @@ class AddViewController: UIViewController {
                                 Label("Section"),
                                 Field(value: "", placeholder: "Work", keyboardType: .default)
                                     .configure { $0.borderStyle = .roundedRect }
-                                    .inputHandler { self.listItem.section = $0 }
+                                    .inputHandler { [weak self] in self?.listItem.section = $0 }
                             ]
                         },
                         
@@ -92,7 +94,7 @@ class AddViewController: UIViewController {
                                 Label("Tags (Seperate tags with a comma)"),
                                 Field(value: "", placeholder: "Swift, iOS, SUIK", keyboardType: .default)
                                     .configure { $0.borderStyle = .roundedRect }
-                                    .inputHandler { self.listItem.tags = $0.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: ",").map(String.init) }
+                                    .inputHandler { [weak self] in self?.listItem.tags = $0.trimmingCharacters(in: .whitespacesAndNewlines).split(separator: ",").map(String.init) }
                             ]
                         },
                         

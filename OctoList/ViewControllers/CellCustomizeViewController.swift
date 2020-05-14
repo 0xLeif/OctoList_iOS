@@ -45,20 +45,18 @@ class CellCustomizeViewController: UIViewController {
                 
                 globalStyle = self.style
                 
-                FLite.connection
-                    
-                    .then { (connection) in
-                        globalStyle.update(on: connection)
-                }
-                .catch { (error) in
-                    print("\(error.localizedDescription)")
-                }
-                .whenComplete {
+                FLite.connection(withHandler: { (connection) in
+                     globalStyle.update(on: connection)
+                        .catch { (error) in
+                         print("\(error.localizedDescription)")
+                     }
+                }, completionHandler: {
                     DispatchQueue.main.async {
                         Navigate.shared.destroyToast()
                         Navigate.shared.back()
                     }
-                }
+                })
+                    
             }
         })
         

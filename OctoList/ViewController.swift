@@ -63,14 +63,19 @@ class ViewController: UIViewController {
                 }
             })
             .setRight(barButton: BarButton {
-                Button("Add", titleColor: view.tintColor) {
-                    Navigate.shared.go(AddViewController(addItemHandler: { [weak self] (newItem) in
-                        FLite.create(model: newItem).do { (newItem) in
-                            DispatchQueue.main.async {
-                                self?.data.append(newItem)
-                            }
+                Button("Add", titleColor: view.tintColor) { [weak self] in
+                    Navigate.shared.go(AddViewController(addItemHandler: { (newItem) in
+
+                        print("Adding VC: \(newItem.title)")
+                        FLite.create(model: newItem, onError: { (error) in
+                            print("FLITE: \(error)")
+                        }) { (newItem) in
+                             print("Adding Create: \(newItem.title)")
+                                                       DispatchQueue.main.async {
+                                                           print("Adding Append: \(newItem.title)")
+                                                           self?.data.append(newItem)
+                                                       }
                         }
-                        .catch { print($0.localizedDescription) }
                     }), style: .modal)
                 }
             })
@@ -87,12 +92,11 @@ class ViewController: UIViewController {
                 
                 
                 let element = self.currentTableData[path.section][path.row]
-                
-                FLite.connection.then { (connection) in
-                    element.delete(on: connection)
-                }.catch {
-                    print("\($0)")
-                }.whenComplete {
+                FLite.connection(withHandler: { (connection) in
+                    element.delete(on: connection).catch {
+                        print("\($0)")
+                    }
+                }) {
                     Navigate.shared.destroyToast()
                 }
                 

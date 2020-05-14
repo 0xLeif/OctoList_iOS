@@ -18,16 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FLite.storage = .file(path: "\(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.path ?? "")/default.sqlite")
         
-        FLite.prepare(model: ListItemData.self).whenComplete {
+        FLite.prepare(model: ListItemData.self) {
             print("FLite Prepared: ListItemData")
         }
         
-        FLite.prepare(model: SUIKStyle.self).whenComplete {
+        FLite.prepare(model: SUIKStyle.self) {
             print("FLite Prepared: SUIKStyle")
         }
-        
-        FLite.create(model: globalStyle).catch { print($0) }.whenComplete {
-            print("Added :\(globalStyle)")
+        FLite.create(model: globalStyle, onError: { (error) in
+            print("Error Creating Style: \(error)")
+        }) { (value) in
+            print("Created Style: \(value)")
         }
         
         FLite.fetchAll(model: SUIKStyle.self) { (styles) in

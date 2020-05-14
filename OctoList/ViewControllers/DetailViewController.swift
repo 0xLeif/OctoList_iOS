@@ -38,13 +38,12 @@ class DetailViewController: UIViewController {
                     DispatchQueue.main.async {
                         self?.draw()
                     }
-                    FLite.connection.do { (connection) in
+                    FLite.connection(withHandler: { (connection) in
                         self?.item.update(on: connection).do { (item) in
                             self?.updateItemHandler(item)
                         }
                         .catch { print($0.localizedDescription) }
-                    }
-                    .catch { print($0.localizedDescription) }
+                    }, completionHandler: {})
                 }, style: .modal)
             }
         })
