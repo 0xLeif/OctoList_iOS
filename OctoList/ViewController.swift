@@ -11,41 +11,31 @@ import SwiftUIKit
 import FLite
 import EKit
 
+var sortOption = SortOption(sectionDataOption: .section,
+                            sectionSortMethod: .alphabetical(ascending: true),
+                            dataOption: .title,
+                            sortMethod: .alphabetical(ascending: false))
 class ViewController: UIViewController {
     // MARK: Data
     private(set) var currentTableData: [[ListItemData]] = []
     private var data: [ListItemData] = [] {
         didSet {
-            currentTableData = newTableData
-            
-            print(currentTableData)
-            self.table
-                .headerTitle { "\(self.currentTableData[$0].first?.section ?? "")" }
-                .footerView { _ in UIView() }
-                .update { _ in currentTableData }
-                .reloadData()
+            reload()
         }
     }
     private var newTableData: [[ListItemData]] {
-        data
-            .map { ($0.section, $0) }
-            .reduce([String: [ListItemData]]()) { (dictionary: [String: [ListItemData]], keyValueTuple: (String?, ListItemData)) -> [String: [ListItemData]] in
-                var reduceDictionary = dictionary
-                
-                guard var array = reduceDictionary[keyValueTuple.0 ?? ""] else {
-                    reduceDictionary[keyValueTuple.0 ?? ""] = [keyValueTuple.1]
-                    return reduceDictionary
-                }
-                
-                array.append(keyValueTuple.1)
-                reduceDictionary[keyValueTuple.0 ?? ""] = array
-                
-                return reduceDictionary
-        }
-        .sorted(by: { (lhs, rhs) -> Bool in
-            return lhs.key < rhs.key
-        })
-            .map { $0.value }
+        data.sorted(by: sortOption)
+    }
+    
+    private func reload() {
+        currentTableData = newTableData
+        
+        print(currentTableData)
+        self.table
+            .headerTitle { "\( self.currentTableData[$0].first.map { data in sortOption.sectionDataOption.value(forData: data) } ?? "")" }
+            .footerView { _ in UIView() }
+            .update { _ in currentTableData }
+            .reloadData()
     }
     
     // MARK: Views
@@ -62,7 +52,8 @@ class ViewController: UIViewController {
                     Navigate.shared.go(SettingsViewController(), style: .push)
                 }
             })
-            .setRight(barButton: BarButton {
+        .setRight(barButtons: [
+            BarButton {
                 Button("Add", titleColor: view.tintColor) { [weak self] in
                     Navigate.shared.go(AddViewController(addItemHandler: { (newItem) in
 
@@ -78,7 +69,23 @@ class ViewController: UIViewController {
                         }
                     }), style: .modal)
                 }
-            })
+            },
+            BarButton {
+                Button("Sort", titleColor: view.tintColor) { [weak self] in
+                    Navigate.shared.go(UIViewController {
+                            UIView(backgroundColor: .brown) {
+                                Button("Tag Count Dec") {
+                                    sortOption = SortOption(sectionDataOption: .tags,
+                                                            sectionSortMethod: .alphabetical(ascending: true),
+                                                            dataOption: .title,
+                                                            sortMethod: .alphabetical(ascending: true))
+                                    self?.reload()
+                                }
+                            }
+                        }, style: .modal)
+                }
+            }
+        ])
         
         table.delegate = self
         

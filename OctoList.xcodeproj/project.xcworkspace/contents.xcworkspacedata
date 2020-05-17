@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/leif/Development/__twoleif/OctoList_iOS/OctoList.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

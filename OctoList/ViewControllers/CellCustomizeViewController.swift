@@ -46,17 +46,17 @@ class CellCustomizeViewController: UIViewController {
                 globalStyle = self.style
                 
                 FLite.connection(withHandler: { (connection) in
-                     globalStyle.update(on: connection)
+                    globalStyle.update(on: connection)
                         .catch { (error) in
-                         print("\(error.localizedDescription)")
-                     }
+                            print("\(error.localizedDescription)")
+                    }
                 }, completionHandler: {
                     DispatchQueue.main.async {
                         Navigate.shared.destroyToast()
                         Navigate.shared.back()
                     }
                 })
-                    
+                
             }
         })
         
@@ -143,7 +143,7 @@ class CellCustomizeViewController: UIViewController {
                                         
                                         VStack {
                                             [
-                                                Label.headline("Background Color"),
+                                                Label.headline("Colors"),
                                                 Button({ [weak self] in
                                                     guard let self = self else {
                                                         return
@@ -159,7 +159,7 @@ class CellCustomizeViewController: UIViewController {
                                                 }) {
                                                     HStack {
                                                         [
-                                                            Label("Set Color"),
+                                                            Label("Set Background Color"),
                                                             Spacer(),
                                                             self.currentBackgroundColorView
                                                                 .frame(width: 44)
@@ -172,12 +172,7 @@ class CellCustomizeViewController: UIViewController {
                                                     .frame(height: 44)
                                                     .padding(4)
                                                     
-                                                }
-                                            ]
-                                        },
-                                        VStack {
-                                            [
-                                                Label.headline("Margin Background Color"),
+                                                },
                                                 Button({ [weak self] in
                                                     guard let self = self else {
                                                         return
@@ -193,7 +188,7 @@ class CellCustomizeViewController: UIViewController {
                                                 }) {
                                                     HStack {
                                                         [
-                                                            Label("Set Color"),
+                                                            Label("Set Margin Background Color"),
                                                             Spacer(),
                                                             self.currentMarginBackgroundColorView
                                                                 .frame(width: 44)
@@ -206,12 +201,7 @@ class CellCustomizeViewController: UIViewController {
                                                     .frame(height: 44)
                                                     .padding(4)
                                                     
-                                                }
-                                            ]
-                                        },
-                                        VStack {
-                                            [
-                                                Label.headline("Border Color"),
+                                                },
                                                 Button({ [weak self] in
                                                     guard let self = self else {
                                                         return
@@ -227,7 +217,7 @@ class CellCustomizeViewController: UIViewController {
                                                 }) {
                                                     HStack {
                                                         [
-                                                            Label("Set Color"),
+                                                            Label("Set Border Color"),
                                                             Spacer(),
                                                             self.currentBorderColorView
                                                                 .frame(width: 44)
@@ -240,12 +230,7 @@ class CellCustomizeViewController: UIViewController {
                                                     .frame(height: 44)
                                                     .padding(4)
                                                     
-                                                }
-                                            ]
-                                        },
-                                        VStack {
-                                            [
-                                                Label.headline("Text Color"),
+                                                },
                                                 Button({ [weak self] in
                                                     guard let self = self else {
                                                         return
@@ -261,7 +246,7 @@ class CellCustomizeViewController: UIViewController {
                                                 }) {
                                                     HStack {
                                                         [
-                                                            Label("Set Color"),
+                                                            Label("Set Text Color"),
                                                             Spacer(),
                                                             self.currentTextColorView
                                                                 .frame(width: 44)
@@ -279,6 +264,7 @@ class CellCustomizeViewController: UIViewController {
                                         },
                                     ]
                                 }.configure { $0.separatorStyle = .none }
+                                    .configureCell { $0.selectionStyle = .none }
                             ]
                         }
                         

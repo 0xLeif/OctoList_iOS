@@ -42,7 +42,7 @@
         "repositoryURL": "https://github.com/0xLeif/FLite",
         "state": {
           "branch": "develop",
-          "revision": "a0e66ab0da6b97be6c9624a3e47c42d13ebf6945",
+          "revision": "6bd902c364ed6d3cde355d71d0b03665392b904a",
           "version": null
         }
       },
@@ -113,8 +113,8 @@
         "package": "SwiftUIKit",
         "repositoryURL": "https://github.com/0xLeif/SwiftUIKit",
         "state": {
-          "branch": "develop",
-          "revision": "a595e12fe4f4a9658211fb3ee23110f854ed0e06",
+          "branch": "feature/suik-142-container-view",
+          "revision": "a6a6c83746034bd4f16d9545d73aea16566dd0ed",
           "version": null
         }
       }

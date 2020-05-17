@@ -26,6 +26,7 @@
 		299AE7C6245E034100C62E83 /* FLite in Frameworks */ = {isa = PBXBuildFile; productRef = 299AE7C5245E034100C62E83 /* FLite */; };
 		299AE7ED245F360100C62E83 /* EKit in Frameworks */ = {isa = PBXBuildFile; productRef = 299AE7EC245F360100C62E83 /* EKit */; };
 		29B62D5C246B5222000AD017 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B62D5B246B5222000AD017 /* ColorPickerViewController.swift */; };
+		29DFED772471AB9200C1EDCC /* SortOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DFED762471AB9200C1EDCC /* SortOption.swift */; };
 		29FE73CD2467128E00BBDA18 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FE73CC2467128E00BBDA18 /* EditViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		297CF9C024675397000B12A3 /* CellCustomizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellCustomizeViewController.swift; sourceTree = "<group>"; };
 		297CF9C2246761E4000B12A3 /* SUIKStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUIKStyle.swift; sourceTree = "<group>"; };
 		29B62D5B246B5222000AD017 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
+		29DFED762471AB9200C1EDCC /* SortOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOption.swift; sourceTree = "<group>"; };
 		29FE73CC2467128E00BBDA18 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,7 @@
 				291E9F90245CD023001DE464 /* ListItemData.swift */,
 				297CF9C2246761E4000B12A3 /* SUIKStyle.swift */,
 				2976DE54246CAFC8002B2F25 /* OctoColor.swift */,
+				29DFED762471AB9200C1EDCC /* SortOption.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				29FE73CD2467128E00BBDA18 /* EditViewController.swift in Sources */,
 				292F61DD2454B6DC00CABDDC /* ViewController.swift in Sources */,
 				2976DE55246CAFC8002B2F25 /* OctoColor.swift in Sources */,
+				29DFED772471AB9200C1EDCC /* SortOption.swift in Sources */,
 				291E9F94245CD05F001DE464 /* ListItemCell.swift in Sources */,
 				292F61D92454B6DC00CABDDC /* AppDelegate.swift in Sources */,
 				291E9F91245CD023001DE464 /* ListItemData.swift in Sources */,
@@ -384,6 +388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OctoList/OctoList.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8M8SAX62V2;
@@ -396,6 +401,7 @@
 				MARKETING_VERSION = 0.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = leif.octo.list.poc;
 				PRODUCT_NAME = OctoList;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -405,6 +411,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = OctoList/OctoList.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8M8SAX62V2;
@@ -417,6 +424,7 @@
 				MARKETING_VERSION = 0.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = leif.octo.list.poc;
 				PRODUCT_NAME = OctoList;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -450,7 +458,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/0xLeif/SwiftUIKit";
 			requirement = {
-				branch = develop;
+				branch = "feature/suik-142-container-view";
 				kind = branch;
 			};
 		};
@@ -458,7 +466,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/0xLeif/FLite";
 			requirement = {
-				branch = bug/FixMaxConnections;
+				branch = develop;
 				kind = branch;
 			};
 		};

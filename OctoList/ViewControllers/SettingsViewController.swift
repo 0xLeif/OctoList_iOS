@@ -21,20 +21,19 @@ class SettingsViewController: UIViewController {
         view.background(color: .white).embed {
             Table(defaultCellHeight: 60) {
                 [
-                    Label.title1("Customization").padding(),
                     Button({ Navigate.shared.go(CellCustomizeViewController(), style: .push) }) {
                         HStack {
                             [
-                                Label.headline("Cell"),
-                                Spacer(),
-                                Label(E.right_arrow.rawValue)
+                                Label.body("Cell Customization"),
+                                Spacer()
                             ]
                         }
-                        .padding()
+                        .padding(16)
                     }
                 ]
             }
             .configure { $0.allowsSelection = false }
+            .configureCell { $0.accessoryType = .disclosureIndicator }
         }
     }
     
