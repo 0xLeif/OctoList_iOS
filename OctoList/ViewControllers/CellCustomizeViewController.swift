@@ -20,8 +20,10 @@ class CellCustomizeViewController: UIViewController {
         VStack {
             [
                 Label.title1("SOME TITLE"),
-                Label.body("THIS IS THE FIRST NOTE")
-                    .number(ofLines: 5)
+                Label.body((1 ... 10)
+                    .map { "Line #\($0)" }
+                    .joined(separator: "\n") + "\nMore Lines!")
+                    .number(ofLines: self.style.numberOfLines)
             ]
         }
     }
@@ -136,6 +138,39 @@ class CellCustomizeViewController: UIViewController {
                                                     
                                                     self.style.cornerRadius = value
                                                     self.styledView.apply(style: self.style)
+                                                }
+                                                .padding(4)
+                                            ]
+                                        },
+                                        
+                                        VStack {
+                                            let numberOfLinesLabel = Label.headline("\(self.style.numberOfLines)")
+                                            return [
+                                                HStack {
+                                                    [
+                                                        Label.headline("Number of Lines"),
+                                                        Spacer(),
+                                                        numberOfLinesLabel
+                                                    ]
+                                                },
+                                                
+                                                Slider(value: Float(self.style.numberOfLines), from: 1, to: 11) { [weak self] value in
+                                                    guard let self = self else {
+                                                        return
+                                                    }
+                                                    let lines = Int(value)
+                                                    guard lines < 11 else {
+                                                        self.style.numberOfLines = 0
+                                                        self.styledView.apply(style: self.style)
+                                                        
+                                                        numberOfLinesLabel.text = "Inf."
+                                                        return
+                                                    }
+                                                    
+                                                    self.style.numberOfLines = lines
+                                                    self.styledView.apply(style: self.style)
+                                                    
+                                                    numberOfLinesLabel.text = "\(lines)"
                                                 }
                                                 .padding(4)
                                             ]

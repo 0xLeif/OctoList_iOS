@@ -20,6 +20,7 @@ struct SUIKStyle: SQLiteModel {
     var padding: Float = 0
     var borderWidth: Float = 0
     var cornerRadius: Float = 0
+    var numberOfLines: Int = 3
     // Color Values
     var backgroundColor: OctoColor = .white
     var marginBackgroundColor: OctoColor = .clear
@@ -38,5 +39,6 @@ extension SUIKStyle: Migration { }
 extension UILabel: Styleable {
     func apply(style: SUIKStyle) {
         textColor = style.textColor.uicolor
+        numberOfLines = style.numberOfLines
     }
 }
